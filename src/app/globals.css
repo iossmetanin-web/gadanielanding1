@@ -1,0 +1,276 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-emerald-glow: var(--emerald-glow);
+  --color-deep-purple: var(--deep-purple);
+  --color-midnight: var(--midnight);
+  --color-surface: var(--surface);
+  --font-sans: var(--font-manrope);
+  --font-serif: var(--font-playfair);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 10px);
+}
+
+:root {
+  --radius: 0.875rem;
+}
+
+.dark {
+  --background: #111116;
+  --surface: #181820;
+  --card: #1c1c26;
+  --card-foreground: #eae7f2;
+  --popover: #1c1c26;
+  --popover-foreground: #eae7f2;
+  --foreground: #eae7f2;
+  --primary: #8163c6;
+  --primary-foreground: #ffffff;
+  --secondary: #23232f;
+  --secondary-foreground: #eae7f2;
+  --muted: #1f1f29;
+  --muted-foreground: #b6b2c8;
+  --accent: #2a2340;
+  --accent-foreground: #eae7f2;
+  --border: rgba(201, 168, 106, 0.16);
+  --input: rgba(255, 255, 255, 0.07);
+  --ring: #c9a86a;
+  --gold: #c9a86a;
+  --gold-soft: #d8be86;
+  --emerald-glow: #2a4a40;
+  --deep-purple: #2e1f47;
+  --midnight: #1b2845;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "kern", "liga", "calt";
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: rgba(201, 168, 106, 0.28);
+    color: #fff;
+  }
+  h1, h2, h3, h4 {
+    @apply font-serif;
+    letter-spacing: -0.01em;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0e0e13;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(201, 168, 106, 0.28);
+    border-radius: 999px;
+    border: 2px solid #0e0e13;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(201, 168, 106, 0.45);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  .bg-grain {
+    background-image: radial-gradient(rgba(201, 168, 106, 0.08) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  .gold-divider {
+    background: linear-gradient(90deg, transparent, rgba(201, 168, 106, 0.5), transparent);
+  }
+  .shadow-mystic {
+    box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(201, 168, 106, 0.08) inset;
+  }
+  .shadow-glow-purple {
+    box-shadow: 0 0 80px -20px rgba(129, 99, 198, 0.5);
+  }
+}
+
+/* === HERO LUXURY BACKGROUND === */
+/* Вне @layer чтобы гарантированно применялся в Tailwind v4 */
+.hero-bg {
+  background-color: #0B0A10;
+  background-image:
+    radial-gradient(55% 45% at 50% 6%, rgba(184, 155, 99, 0.18) 0%, rgba(184, 155, 99, 0.06) 40%, transparent 72%),
+    radial-gradient(120% 100% at 50% 0%, #17141F 0%, #111018 42%, #0B0A10 82%),
+    linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+.hero-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+  background-image:
+    repeating-radial-gradient(
+      circle at 50% 42%,
+      transparent 0,
+      transparent 108px,
+      rgba(216, 192, 139, 0.5) 108px,
+      rgba(216, 192, 139, 0.5) 109px,
+      transparent 109px,
+      transparent 178px,
+      rgba(184, 155, 99, 0.38) 178px,
+      rgba(184, 155, 99, 0.38) 179px,
+      transparent 179px,
+      transparent 268px,
+      rgba(184, 155, 99, 0.26) 268px,
+      rgba(184, 155, 99, 0.26) 269px,
+      transparent 269px,
+      transparent 378px,
+      rgba(216, 192, 139, 0.18) 378px,
+      rgba(216, 192, 139, 0.18) 379px
+    ),
+    linear-gradient(90deg, transparent 49.8%, rgba(216, 192, 139, 0.22) 49.92%, rgba(216, 192, 139, 0.22) 50.08%, transparent 50.2%),
+    linear-gradient(0deg, transparent 49.8%, rgba(216, 192, 139, 0.22) 49.92%, rgba(216, 192, 139, 0.22) 50.08%, transparent 50.2%),
+    linear-gradient(60deg, transparent 49.85%, rgba(184, 155, 99, 0.14) 49.94%, rgba(184, 155, 99, 0.14) 50.06%, transparent 50.15%),
+    linear-gradient(120deg, transparent 49.85%, rgba(184, 155, 99, 0.14) 49.94%, rgba(184, 155, 99, 0.14) 50.06%, transparent 50.15%);
+  -webkit-mask-image: radial-gradient(72% 68% at 50% 42%, black 0%, rgba(0, 0, 0, 0.55) 55%, transparent 82%);
+  mask-image: radial-gradient(72% 68% at 50% 42%, black 0%, rgba(0, 0, 0, 0.55) 55%, transparent 82%);
+}
+
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.9;
+  background-image:
+    radial-gradient(1.4px 1.4px at 12% 18%, rgba(216, 192, 139, 0.95), transparent 60%),
+    radial-gradient(1.2px 1.2px at 78% 12%, rgba(216, 192, 139, 0.85), transparent 60%),
+    radial-gradient(1.3px 1.3px at 24% 62%, rgba(216, 192, 139, 0.9), transparent 60%),
+    radial-gradient(1.2px 1.2px at 88% 48%, rgba(184, 155, 99, 0.75), transparent 60%),
+    radial-gradient(1.3px 1.3px at 42% 80%, rgba(216, 192, 139, 0.7), transparent 60%),
+    radial-gradient(1.2px 1.2px at 64% 88%, rgba(184, 155, 99, 0.75), transparent 60%),
+    radial-gradient(1.2px 1.2px at 8% 40%, rgba(216, 192, 139, 0.6), transparent 60%),
+    radial-gradient(1.3px 1.3px at 92% 72%, rgba(216, 192, 139, 0.65), transparent 60%),
+    radial-gradient(1.1px 1.1px at 34% 28%, rgba(184, 155, 99, 0.55), transparent 60%),
+    radial-gradient(1.2px 1.2px at 58% 16%, rgba(216, 192, 139, 0.6), transparent 60%),
+    radial-gradient(1.1px 1.1px at 16% 86%, rgba(184, 155, 99, 0.55), transparent 60%),
+    radial-gradient(1.2px 1.2px at 72% 38%, rgba(216, 192, 139, 0.52), transparent 60%),
+    radial-gradient(1px 1px at 48% 54%, rgba(184, 155, 99, 0.5), transparent 60%),
+    radial-gradient(1.1px 1.1px at 82% 24%, rgba(216, 192, 139, 0.55), transparent 60%),
+    radial-gradient(1px 1px at 6% 70%, rgba(184, 155, 99, 0.45), transparent 60%),
+    radial-gradient(1px 1px at 96% 56%, rgba(216, 192, 139, 0.45), transparent 60%),
+    radial-gradient(1px 1px at 30% 8%, rgba(184, 155, 99, 0.5), transparent 60%),
+    radial-gradient(1px 1px at 68% 68%, rgba(216, 192, 139, 0.45), transparent 60%);
+  -webkit-mask-image: radial-gradient(78% 78% at 50% 42%, black 15%, rgba(0, 0, 0, 0.5) 60%, transparent 92%);
+  mask-image: radial-gradient(78% 78% at 50% 42%, black 15%, rgba(0, 0, 0, 0.5) 60%, transparent 92%);
+}
+
+/* === SITE-WIDE LUXURY BACKGROUND (заметная версия для всего сайта) === */
+.site-bg {
+  background-color: #0B0A10;
+  background-image:
+    radial-gradient(70% 50% at 50% 0%, rgba(184, 155, 99, 0.12) 0%, rgba(184, 155, 99, 0.03) 45%, transparent 75%),
+    radial-gradient(90% 70% at 50% 0%, #17141F 0%, #111018 55%, #0B0A10 92%),
+    linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.25) 100%);
+}
+
+.site-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+  background-image:
+    repeating-radial-gradient(
+      circle at 50% 25%,
+      transparent 0,
+      transparent 200px,
+      rgba(216, 192, 139, 0.65) 200px,
+      rgba(216, 192, 139, 0.65) 201px,
+      transparent 201px,
+      transparent 340px,
+      rgba(184, 155, 99, 0.5) 340px,
+      rgba(184, 155, 99, 0.5) 341px,
+      transparent 341px,
+      transparent 520px,
+      rgba(184, 155, 99, 0.35) 520px,
+      rgba(184, 155, 99, 0.35) 521px,
+      transparent 521px,
+      transparent 740px,
+      rgba(216, 192, 139, 0.25) 740px,
+      rgba(216, 192, 139, 0.25) 741px
+    ),
+    linear-gradient(90deg, transparent 49.85%, rgba(216, 192, 139, 0.15) 49.92%, rgba(216, 192, 139, 0.15) 50.08%, transparent 50.15%),
+    linear-gradient(60deg, transparent 49.88%, rgba(184, 155, 99, 0.10) 49.94%, rgba(184, 155, 99, 0.10) 50.06%, transparent 50.12%),
+    linear-gradient(120deg, transparent 49.88%, rgba(184, 155, 99, 0.10) 49.94%, rgba(184, 155, 99, 0.10) 50.06%, transparent 50.12%);
+  -webkit-mask-image: radial-gradient(85% 85% at 50% 25%, black 0%, rgba(0, 0, 0, 0.4) 65%, transparent 92%);
+  mask-image: radial-gradient(85% 85% at 50% 25%, black 0%, rgba(0, 0, 0, 0.4) 65%, transparent 92%);
+}
+
+.site-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
+  background-image:
+    radial-gradient(1.5px 1.5px at 8% 12%, rgba(216, 192, 139, 0.95), transparent 55%),
+    radial-gradient(1.4px 1.4px at 22% 78%, rgba(216, 192, 139, 0.85), transparent 55%),
+    radial-gradient(1.5px 1.5px at 38% 22%, rgba(184, 155, 99, 0.8), transparent 55%),
+    radial-gradient(1.4px 1.4px at 52% 88%, rgba(216, 192, 139, 0.85), transparent 55%),
+    radial-gradient(1.5px 1.5px at 68% 14%, rgba(184, 155, 99, 0.75), transparent 55%),
+    radial-gradient(1.4px 1.4px at 82% 66%, rgba(216, 192, 139, 0.8), transparent 55%),
+    radial-gradient(1.4px 1.4px at 94% 32%, rgba(184, 155, 99, 0.75), transparent 55%),
+    radial-gradient(1.3px 1.3px at 14% 48%, rgba(216, 192, 139, 0.7), transparent 55%),
+    radial-gradient(1.3px 1.3px at 46% 58%, rgba(184, 155, 99, 0.7), transparent 55%),
+    radial-gradient(1.3px 1.3px at 74% 42%, rgba(216, 192, 139, 0.7), transparent 55%),
+    radial-gradient(1.3px 1.3px at 28% 92%, rgba(184, 155, 99, 0.7), transparent 55%),
+    radial-gradient(1.3px 1.3px at 88% 82%, rgba(216, 192, 139, 0.7), transparent 55%),
+    radial-gradient(1.2px 1.2px at 4% 28%, rgba(216, 192, 139, 0.6), transparent 55%),
+    radial-gradient(1.2px 1.2px at 96% 52%, rgba(184, 155, 99, 0.6), transparent 55%),
+    radial-gradient(1.2px 1.2px at 58% 38%, rgba(216, 192, 139, 0.6), transparent 55%),
+    radial-gradient(1.2px 1.2px at 32% 64%, rgba(184, 155, 99, 0.6), transparent 55%),
+    radial-gradient(1.1px 1.1px at 78% 8%, rgba(216, 192, 139, 0.55), transparent 55%),
+    radial-gradient(1.1px 1.1px at 12% 82%, rgba(184, 155, 99, 0.55), transparent 55%),
+    radial-gradient(1.1px 1.1px at 64% 72%, rgba(216, 192, 139, 0.55), transparent 55%),
+    radial-gradient(1.1px 1.1px at 42% 8%, rgba(184, 155, 99, 0.55), transparent 55%);
+  -webkit-mask-image: radial-gradient(95% 95% at 50% 40%, black 15%, rgba(0, 0, 0, 0.5) 70%, transparent 95%);
+  mask-image: radial-gradient(95% 95% at 50% 40%, black 15%, rgba(0, 0, 0, 0.5) 70%, transparent 95%);
+}
