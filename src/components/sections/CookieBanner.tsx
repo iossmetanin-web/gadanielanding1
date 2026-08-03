@@ -42,7 +42,7 @@ export function CookieBanner() {
       className="fixed inset-x-0 bottom-0 z-[60] px-4 pb-4"
       style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}
     >
-      <div className="mx-auto flex max-w-3xl flex-col gap-3 rounded-2xl border border-gold/25 bg-card/95 p-5 shadow-mystic backdrop-blur-xl sm:flex-row sm:items-center sm:gap-5">
+      <div className="mx-auto flex max-w-3xl flex-col gap-3 rounded-2xl border border-gold/25 bg-card/95 p-5 shadow-mystic sm:flex-row sm:items-center sm:gap-5">
         <span className="flex size-10 shrink-0 items-center justify-center rounded-full border border-gold/30 bg-deep-purple/40 text-gold">
           <Cookie className="size-5" aria-hidden="true" />
         </span>

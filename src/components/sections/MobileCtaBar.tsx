@@ -46,7 +46,7 @@ export function MobileCtaBar() {
       } transition-all duration-300`}
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
-      <div className="border-t border-border/60 bg-background/90 backdrop-blur-xl">
+      <div className="border-t border-border/60 bg-background/95">
         <div className="flex items-center gap-3 px-4 py-3">
           <div className="flex flex-col leading-none">
             <span className="text-[11px] text-muted-foreground">

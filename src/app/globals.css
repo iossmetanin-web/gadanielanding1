@@ -201,6 +201,10 @@
 }
 
 /* === SITE-WIDE LUXURY BACKGROUND (заметная версия для всего сайта) === */
+/* ВАЖНО: ::before и ::after имеют position: fixed — они рендерятся один раз
+   в пределах viewport и НЕ пересчитываются при скролле. Раньше было absolute,
+   что заставляло GPU перерисовывать 4 кольца + 3 линии + 20 звёзд на всю
+   высоту страницы (5000+px) на каждый кадр скролла. */
 .site-bg {
   background-color: #0B0A10;
   background-image:
@@ -211,7 +215,7 @@
 
 .site-bg::before {
   content: "";
-  position: absolute;
+  position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
@@ -245,7 +249,7 @@
 
 .site-bg::after {
   content: "";
-  position: absolute;
+  position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
@@ -273,4 +277,42 @@
     radial-gradient(1.1px 1.1px at 42% 8%, rgba(184, 155, 99, 0.55), transparent 55%);
   -webkit-mask-image: radial-gradient(95% 95% at 50% 40%, black 15%, rgba(0, 0, 0, 0.5) 70%, transparent 95%);
   mask-image: radial-gradient(95% 95% at 50% 40%, black 15%, rgba(0, 0, 0, 0.5) 70%, transparent 95%);
+}
+
+/* GPU-ускорение фиксированных фоновых слоёв — композитор кладёт их в
+   отдельный layer и не перерисовывает при скролле */
+.site-bg::before,
+.site-bg::after {
+  will-change: opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* === REVEAL (CSS-only, замена framer-motion) === */
+/* Контент видим по умолчанию. Класс .reveal--hidden добавляется только после
+   монтирования (useEffect) и только если элемент ниже зоны видимости. */
+.reveal {
+  opacity: 1;
+  transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity;
+}
+
+.reveal--hidden {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-bg::before,
+  .site-bg::after,
+  .hero-bg::before,
+  .hero-bg::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .reveal,
+  .reveal--hidden {
+    opacity: 1 !important;
+    transition: none !important;
+    animation: none !important;
+  }
 }
