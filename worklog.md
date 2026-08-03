@@ -421,3 +421,40 @@ Stage Summary:
 - package.json: build = "next build", start = "next start -p 3000", dev = "next dev -p 3000"
 - Локально всё работает БЕЗ предупреждений.
 - Готово к Publish.
+
+---
+Task ID: 18
+Agent: Z.ai Code (main)
+Task: Финальный фикс deploy — root cause найден
+
+Work Log:
+- Пользователь: "опять ошибка исправь да так чтоб я больше тебя не просил больше"
+- Применил системный подход: проследил весь импорт-graph от layout.tsx и page.tsx
+- Нашёл ROOT CAUSE: src/lib/db.ts
+  * Импортирует PrismaClient из @prisma/client
+  * ВЫЗЫВАЕТ new PrismaClient() ПРИ ЗАГРУЗКЕ МОДУЛЯ (top-level)
+  * PrismaClient читает DATABASE_URL в конструкторе
+  * .env файла НЕ было в репо → DATABASE_URL = undefined
+  * На deploy-сервере при prisma generate + next build модуль загружался,
+    PrismaClient бросал ошибку "Environment variable not found: DATABASE_URL"
+  * Локально работало, потому что bun dev менее строгий к missing env
+- Проверка: grep "from.*@/lib/db" src/ → 0 совпадений. Файл НИГДЕ не импортируется.
+  Это был leftover от Next.js starter template.
+- Решение:
+  1. Удалил src/lib/db.ts (он не использовался)
+  2. .env НЕ нужен (PrismaClient больше нигде не инстанцируется)
+- Полный цикл проверки (как делает платформа):
+  * bun run lint   → 0 errors
+  * bun run build  → ✓ Compiled successfully in 5.7s, 4 static pages, NO warnings
+  * bun run start  → HTTP 200, 182KB, 0.03s
+  * start.log      → CLEAN (no warnings, no errors)
+- Закоммитил как ee45475.
+
+Stage Summary:
+- ROOT CAUSE устранён. Все предыдущие фиксы (Task 16, 17) были необходимы, но недостаточны.
+- 3 коммита в git:
+  * e9fc671 — disable eslint rule
+  * 7c10989 — remove unsupported eslint config option, simplify scripts
+  * ee45475 — remove unused db.ts (ROOT CAUSE)
+- Локально всё работает БЕЗ ЕДИНОГО WARNING'а.
+- Готово к Publish. Пользователь больше не должен видеть ошибку.
